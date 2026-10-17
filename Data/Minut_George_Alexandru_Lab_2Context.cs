@@ -16,5 +16,6 @@ namespace Minut_George_Alexandru_Lab_2.Data
 
         public DbSet<Minut_George_Alexandru_Lab_2.Models.Book> Book { get; set; } = default!;
         public DbSet<Minut_George_Alexandru_Lab_2.Models.Publisher> Publisher { get; set; } = default!;
+        public DbSet<Minut_George_Alexandru_Lab_2.Models.Author> Author { get; set; } = default!;
     }
 }

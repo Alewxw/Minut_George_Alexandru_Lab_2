@@ -22,6 +22,27 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Author", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Author", (string)null);
+                });
+
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Book", b =>
                 {
                     b.Property<int>("ID")
@@ -30,9 +51,8 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("AuthorID")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6, 2)");
@@ -49,9 +69,11 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("AuthorID");
+
                     b.HasIndex("PublisherID");
 
-                    b.ToTable("Book");
+                    b.ToTable("Book", (string)null);
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Publisher", b =>
@@ -68,16 +90,27 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Publisher");
+                    b.ToTable("Publisher", (string)null);
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Book", b =>
                 {
+                    b.HasOne("Minut_George_Alexandru_Lab_2.Models.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorID");
+
                     b.HasOne("Minut_George_Alexandru_Lab_2.Models.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherID");
 
+                    b.Navigation("Author");
+
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Author", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Publisher", b =>

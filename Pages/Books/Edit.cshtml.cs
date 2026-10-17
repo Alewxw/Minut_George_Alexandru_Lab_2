@@ -23,6 +23,12 @@ namespace Minut_George_Alexandru_Lab_2.Pages.Books
         [BindProperty]
         public Book Book { get; set; } = default!;
 
+        private void PopulateDropdowns()
+        {
+            ViewData["AuthorID"] = new SelectList(_context.Set<Author>(), "ID", "FullName");
+            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+        }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -36,7 +42,7 @@ namespace Minut_George_Alexandru_Lab_2.Pages.Books
                 return NotFound();
             }
             Book = book;
-            ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "PublisherName");
+            PopulateDropdowns();
             return Page();
         }
 
@@ -46,6 +52,7 @@ namespace Minut_George_Alexandru_Lab_2.Pages.Books
         {
             if (!ModelState.IsValid)
             {
+                PopulateDropdowns();
                 return Page();
             }
 
