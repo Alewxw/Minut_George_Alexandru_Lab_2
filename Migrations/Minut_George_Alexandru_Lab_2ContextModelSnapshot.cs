@@ -40,7 +40,7 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Author", (string)null);
+                    b.ToTable("Author");
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Book", b =>
@@ -73,7 +73,47 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
                     b.HasIndex("PublisherID");
 
-                    b.ToTable("Book", (string)null);
+                    b.ToTable("Book");
+                });
+
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.BookCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("BookID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BookID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("BookCategory");
+                });
+
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Category", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Publisher", b =>
@@ -90,7 +130,7 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Publisher", (string)null);
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Book", b =>
@@ -108,9 +148,38 @@ namespace Minut_George_Alexandru_Lab_2.Migrations
                     b.Navigation("Publisher");
                 });
 
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.BookCategory", b =>
+                {
+                    b.HasOne("Minut_George_Alexandru_Lab_2.Models.Book", "Book")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Minut_George_Alexandru_Lab_2.Models.Category", "Category")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Author", b =>
                 {
                     b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Book", b =>
+                {
+                    b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Category", b =>
+                {
+                    b.Navigation("BookCategories");
                 });
 
             modelBuilder.Entity("Minut_George_Alexandru_Lab_2.Models.Publisher", b =>

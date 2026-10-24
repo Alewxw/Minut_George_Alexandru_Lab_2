@@ -1,0 +1,12 @@
+﻿namespace Minut_George_Alexandru_Lab_2.Models
+{
+    public class AssignedCategoryData
+    {
+        public int CategoryID { get; set; }
+
+        public string Name { get; set; }
+
+        public bool Assigned { get; set; }
+
+    }
+}

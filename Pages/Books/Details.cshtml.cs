@@ -29,8 +29,12 @@ namespace Minut_George_Alexandru_Lab_2.Pages.Books
             }
 
             var book = await _context.Book
-                .Include(b => b.Author)
-                .FirstOrDefaultAsync(m => m.ID == id);
+                        .Include(b => b.Author)
+                        .Include(b => b.Publisher)
+                        .Include(b => b.BookCategories)
+                        .ThenInclude(bc => bc.Category)
+                        .FirstOrDefaultAsync(m => m.ID == id);
+
             if (book == null)
             {
                 return NotFound();
