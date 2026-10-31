@@ -1,4 +1,6 @@
-﻿namespace Minut_George_Alexandru_Lab_2.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Minut_George_Alexandru_Lab_2.Models
 {
     public class Author
     {
@@ -10,6 +12,7 @@
 
         public ICollection<Book>? Books { get; set; }
 
+        [Display(Name = "Full Name")]
         public string FullName
         {
             get

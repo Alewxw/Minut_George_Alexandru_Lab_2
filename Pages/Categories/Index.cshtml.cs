@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Minut_George_Alexandru_Lab_2.Data;
 using Minut_George_Alexandru_Lab_2.Models;
+using Minut_George_Alexandru_Lab_2.ViewModels;
 
 namespace Minut_George_Alexandru_Lab_2.Pages.Categories
 {
@@ -21,9 +22,26 @@ namespace Minut_George_Alexandru_Lab_2.Pages.Categories
 
         public IList<Category> Category { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public CategoryIndexData CategoryData { get; set; }
+        public int CategoryID { get; set; }
+
+        public async Task OnGetAsync(int? id)
         {
-            Category = await _context.Category.ToListAsync();
+            CategoryData = new CategoryIndexData();
+            CategoryData.Categories = await _context.Category
+                .Include(i => i.BookCategories)
+                    .ThenInclude(i => i.Book)
+                        .ThenInclude(i => i.Author)
+                .OrderBy(i => i.CategoryName)
+                .ToListAsync();
+
+            if (id != null)
+            {
+                CategoryID = id.Value;
+                Category category = CategoryData.Categories
+                    .Where(i => i.ID == id.Value).Single();
+                CategoryData.Books = category.BookCategories.Select(bc => bc.Book);
+            }
         }
     }
 }
