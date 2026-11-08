@@ -18,5 +18,7 @@ namespace Minut_George_Alexandru_Lab_2.Data
         public DbSet<Minut_George_Alexandru_Lab_2.Models.Publisher> Publisher { get; set; } = default!;
         public DbSet<Minut_George_Alexandru_Lab_2.Models.Author> Author { get; set; } = default!;
         public DbSet<Minut_George_Alexandru_Lab_2.Models.Category> Category { get; set; } = default!;
+        public DbSet<Minut_George_Alexandru_Lab_2.Models.Member> Member { get; set; } = default!;
+        public DbSet<Minut_George_Alexandru_Lab_2.Models.Borrowing> Borrowing { get; set; } = default!;
     }
 }

@@ -24,6 +24,8 @@ namespace Minut_George_Alexandru_Lab_2.Models
 
         public Publisher? Publisher { get; set; }
 
+        public ICollection<Borrowing>? Borrowings { get; set; }
+
         public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }
